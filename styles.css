@@ -1,0 +1,385 @@
+html{
+    background-color: black;
+}
+@keyframes fade-in {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+body{
+    display: flex;
+    flex-direction: column;
+    --bg-image: url('./bodyWallpaperwebp.webp');
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    max-width: 1280px;
+    margin-inline: auto;
+    animation: fade-in 0.6s ease-in-out forwards;
+    /* outline: solid red 2px; */
+    align-items: center;
+    --main-blue-color: rgb(37, 84, 255) ;
+    min-height: 2000px;    
+    &::before{
+        position: fixed;
+        content: "";
+        width: 100%;
+        z-index: -10;
+        height: 100%;
+        background-image: var(--bg-image);
+        background-attachment:fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: grayscale(90%) brightness(0.3) ;        
+    }
+}
+
+nav{
+    display: grid;
+    position: sticky;
+    top: 20px;
+    grid-template-columns: auto max-content auto;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    padding-block: 10px;    
+    font-size: 1rem;
+    border-block: 1px solid rgba(255, 255, 255, 0.286);
+    /* outline: solid red 2px; */
+    div:first-of-type{        
+        padding-left: 10px;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: white;
+    }
+    #main-options-container{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        button{ 
+            color: white; 
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            background-color: unset;
+            &:hover{
+                color: aqua;
+                cursor: pointer;
+            }
+        }
+    }
+    div:last-of-type{
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        justify-content: end;
+        gap: 5px;
+        padding-right: 10px;
+    }
+    &::before{
+        position: absolute;
+        content: "";
+        width: 100%;
+        /* background-color: rgba(222, 222, 222, 0.206); */
+        z-index: -10;
+        height: 100%;        
+        backdrop-filter: blur(10px) ;        
+    }
+}
+@keyframes slide-from-right{
+    from{
+        transform: translateX(200px);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#sign-in-popover{    
+    justify-items: center;
+    overflow-x: hidden;
+    padding-bottom: 60px;    
+    opacity: 1;
+}
+.error-message{
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    font-weight: bold;
+    color: rgb(255, 49, 49);
+    animation: slide-from-right 0.2s ease-in-out forwards;
+    max-width: 50%;
+} 
+#has-company-question-container{
+    display: flex;
+    flex-direction: column;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    gap: 4px;   
+    input{
+        margin-bottom: 15px;
+        border-radius: 4px;
+        
+        &:is(:not([type="button"], [type="radio"], [type="submit"], [type="checkbox"])){
+            outline: 2px solid var(--main-blue-color);
+            &:focus-within{
+                outline: 3px solid ;
+            }
+        }
+        border: none;
+        padding-block: 5px;
+        padding-inline: 15px;
+        &:user-within{            
+            &:is(&:not([type="radio"], [type="submit"])){
+                outline: 2px solid rgb(0, 0, 0);
+            }
+        }  
+        
+    }
+}
+.button-styling{
+    padding-block: 10px;
+    padding-inline: 15px;
+    border: none;
+    border-radius: 4px;
+    --bg-color: rgb(123, 123, 123);
+    background-color: var(--bg-color);    
+    color: white;
+   
+    &:hover{ 
+        cursor: pointer;
+        outline: solid white 2px;
+    }
+    &:last-of-type{
+        background-color: var(--main-blue-color);
+    }
+    transition: outline 0.08s ease-in-out;
+}
+
+[popover]{
+    padding-inline: 100px;
+    padding-bottom: 50px;
+    padding-top: 10px;
+    border-radius: 10px;      
+    opacity: 1;
+    border: 2px var(--main-blue-color) solid;
+}
+
+
+dialog{
+    overflow-x: hidden;
+    top: 10px;
+    h1{ 
+        color: var(--main-blue-color);    
+        text-align: center;    
+        margin-top: 10px;
+    }
+    box-shadow: 0 0 100px 2px var(--main-blue-color);
+    &::backdrop{
+        backdrop-filter: blur(6px);
+        transition: backdrop-filter 0.9s ease-in-out;
+        transition-behavior: allow-discrete;
+    }    
+    .button-styling{
+        &:hover{outline: solid rgb(28, 28, 28) 2px;}        
+        &:is(&:first-of-type, &:last-of-type){align-self: flex-end;}        
+    }   
+    transition:  opacity 0.3s ease,
+    transform 0.5s ease-in-out ;
+    transition-behavior: allow-discrete; 
+}
+
+.button-styling.close-popover-button{
+    position: absolute;
+    top: 25px;
+    right: 26px;
+    padding: 4px 10px;
+    background-color: rgb(238, 44, 89);
+    &:hover{
+        background-color: rgb(255, 74, 74); 
+        outline: none;       
+    }
+}
+#signed-in-menu{
+    display: none;
+    font-size: 1rem;   
+    font-weight: 100; 
+    &:hover{
+        #signed-in-submenu{ display: flex;}
+    }
+    span:first-of-type{
+        color: white;
+    }
+}
+@keyframes slide-down {
+    from{
+        transform: translate(0, 140%);
+        opacity: 0;
+    }
+    to{
+        transform: translate(0, 25%);
+        opacity: 1;
+    }
+}
+#signed-in-submenu-wrapper{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    transform: translateY(15%);
+    height: 60px;
+}
+#signed-in-submenu{
+    display: none;
+    flex-direction: column;
+    position: relative;
+    gap: 0;
+    background-color: var(--main-blue-color);
+    animation: slide-down 0.3s ease forwards;
+    span{
+        font-size: 1rem;
+        color: white;
+        padding-inline: 10px;
+        margin: 0;
+        background-color: var(--main-blue-color);
+        min-width: 100%;
+        text-align: center;
+        transition: transform 0.2s ease;
+
+        &:hover{
+            cursor: pointer;
+            color: var(--main-blue-color);
+            background-color: white;
+            outline: solid 4px var(--main-blue-color);
+            transform: translateX(20px);
+        }
+    }
+}
+#call-to-action{
+    margin-top: 100px;
+    max-width: 60%;
+    h1{
+        font-size: 2.5rem;
+        text-align: center;
+        color: white;
+    }
+    > div:first-of-type{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .button-styling{
+        font-size: 1.3rem;
+    }
+}
+
+footer{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-block: 20px;
+    min-width: 100%;
+    align-items: center;
+    color: white; 
+    background-color: var(--main-blue-color);
+    > div{
+        margin-inline: auto;
+    }
+}
+#available-flights-container{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    /* max-height: 400px; */
+    /* overflow-y: scroll; */
+    /* margin-top: 50px; */
+}
+
+.flight-template{
+    display: flex;
+    gap: 10px;
+    outline: var(--main-blue-color) solid 2px;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    padding-inline: 20px;
+    padding-block: 10px;
+    color: var(--main-blue-color);
+    min-width: 40%;
+    align-self: center;
+    div:first-of-type{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+#book-flight-popover{
+    padding-inline: 0;
+    form{
+        align-items: center;
+        min-width: 500px;
+    }
+    justify-content: center;
+    .button-styling{
+        &:last-of-type{align-self: initial;}
+    }
+}
+#new-user-popover{
+    
+    .button-styling.submit-button{
+        align-self: flex-end;
+    }
+    
+}
+
+@starting-style{
+    dialog{
+         opacity: 0;
+         transform: translateY(-1000px);
+     }
+     dialog::backdrop{
+        backdrop-filter: blur(0px);
+     }
+ }
+ /* #all-flights-container-popover{
+    color: black;
+ } */
+ #all-flights-container-popover{
+    max-height: 500px;
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;        
+    }
+    #all-flights-container{
+        display: grid;
+        gap: 10px;
+    }
+ }
+
+ #cancel-flight-popover, #check-flight-status-popover{
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+ }
+ #flight-status-container{
+    display: grid;
+    gap: 10px;    
+ }
+ #get-flights-submit-button{
+    align-self: center;
+ }
