@@ -42,14 +42,12 @@ Ref: reservas.id_usuario > usuarios.id_usuario
 Ref: reservas.id_espacio > parqueo_espacios.id_espacio
 
 
-Table transaccion{
+Table transaccions{
   id_transaccion integer [primary key]
-  id_usuario integer
-  id_espacio integer
+  id_reserva integer
   monto float
   fecha datetime
   metodo_pago varchar [note: 'values [efectivo,tarjeta]']
 }
 
-Ref: transaccion.id_usuario > usuarios.id_usuario
-Ref: transaccion.id_espacio > parqueo_espacios.id_espacio
+Ref: transaccions.id_reserva - reservas.id_reserva
